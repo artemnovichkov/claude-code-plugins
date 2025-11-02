@@ -1,0 +1,19 @@
+{
+  "name": "claude-code-plugins",
+  "owner": {
+    "name": "Artem Novichkov",
+    "email": "mail@artemnovichkov.com"
+  },
+  "plugins": [
+    {
+      "name": "crash-report",
+      "source": "./plugins/crash-report",
+      "description": "Generate crash report from Firebase Crashlytics with fix proposals and developer assignments",
+      "version": "1.0.0",
+      "author": {
+        "name": "Artem Novichkov",
+        "email": "mail@artemnovichkov.com"
+      }
+    }
+  ]
+}
