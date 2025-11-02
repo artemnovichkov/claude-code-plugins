@@ -1,85 +1,89 @@
-# Crash Report Plugin
+# Crashlytics Plugin
 
-Generate crash report from Firebase Crashlytics with fix proposals and developer assignments.
-
-Uses [Firebase AI Assistance with MCP](https://firebase.google.com/docs/crashlytics/ai-assistance-mcp) to fetch and analyze Crashlytics data.
+Generate crash reports from Firebase Crashlytics with automated fix proposals and developer assignments.
 
 ## Features
 
-- Fetch top fatal errors from Firebase Crashlytics via Firebase MCP server
-- Launch subagents for deep analysis of each error
-- Parse stack traces and identify crash origins
-- Search codebase for crash locations
-- Git blame to identify responsible developers
-- Generate comprehensive markdown reports with fix proposals
-- Suggest specific code fixes with Swift best practices
-- Developer assignments based on git history
-
-## Installation
-
-Install the plugin (Firebase MCP server will be installed automatically):
-
-```bash
-# If installing from this marketplace
-claude-code plugins install crash-report
-```
-
-## Important: Firebase MCP Context Optimization
-
-firebase-tools automatically optimizes MCP context and enables Crashlytics tools based on your project setup. For iOS projects, it checks if `Package.swift` exists in the project root and contains the "Crashlytics" string.
-
-**⚠️ If you added Firebase to your Xcode project without using Swift Package Manager** (e.g., via CocoaPods or manually), the Firebase MCP tools may not be available. To fix this:
-
-1. Ensure you're using Swift Package Manager to add Firebase/Crashlytics
-2. OR create a `Package.swift` in your project root that includes Firebase Crashlytics dependencies
-
-See [Firebase documentation](https://firebase.google.com/docs/crashlytics/ai-assistance-mcp) for more details on MCP context optimization.
-
-## Usage
-
-Run the command to fetch and analyze production crashes:
-
-```
-/crash-report
-```
-
-The command will:
-- Fetch top fatal errors from Firebase Crashlytics via Firebase MCP server
-- Launch subagents for deep analysis of each error
-- Search codebase for crash locations and context
-- Run git blame to identify responsible developers
-- Generate `crash-report-[date].md` with:
-  - Error summaries with occurrence counts
-  - Stack traces and affected files
-  - Root cause analysis
-  - Proposed fixes with before/after code
-  - Developer assignments
-  - Severity/priority recommendations
-
-## Example
-
-```
-User: /crash-report
-
-Claude:
-[Fetches from Firebase Crashlytics via Firebase MCP server]
-[Launches subagents for each error]
-[Generates crash-report-2025-11-02.md]
-
-Report created with 5 fatal errors analyzed:
-- Each with stack trace, root cause, proposed fix
-- Developer assignments via git blame
-- Ready for sprint planning
-```
+- **Fetches Fatal Errors**: Retrieves top crashes from Firebase Crashlytics via MCP server
+- **Stack Trace Analysis**: Identifies exact crash locations in codebase
+- **Root Cause Detection**: Analyzes code context to determine failure patterns
+- **Severity Scoring**: Calculates 0-100 score based on frequency, users affected, pattern criticality
+- **Fix Proposals**: Generates specific code changes following Swift best practices
+- **Developer Assignment**: Uses git blame/log to assign crashes to responsible developers
+- **Crash Grouping**: Groups related issues by pattern/file/root cause
+- **Comprehensive Reports**: Generates markdown reports with stats, trends, priorities
 
 ## Requirements
 
-- Claude Code CLI
 - Firebase project with Crashlytics enabled
-- Swift Package Manager setup with Firebase Crashlytics (for automatic MCP context detection)
+- Git repository
+- Claude Code
 
-For detailed setup and authentication options, see [Firebase AI Assistance with MCP documentation](https://firebase.google.com/docs/crashlytics/ai-assistance-mcp).
+## Commands
 
-## License
+### `/crash-report`
 
-MIT
+Analyzes Crashlytics crashes and generates triage report.
+
+**Process:**
+1. Validates Firebase MCP server connection
+2. Fetches fatal errors from Crashlytics
+3. Launches subagents for deep analysis of each crash
+4. Extracts stack traces, searches codebase for crash locations
+5. Identifies root causes and calculates severity scores
+6. Proposes fixes with before/after code snippets
+7. Uses git blame to assign developers
+8. Generates `crash-report-[YYYY-MM-DD].md`
+
+**Report Sections:**
+- Summary (total errors, quick wins, critical issues)
+- Crashes by severity (high -> medium -> low)
+- Stack traces, affected files, root cause analysis
+- Proposed fixes with code snippets
+- Developer assignments with git history
+- Crash groups
+- Aggregate stats (patterns, iOS versions, devices)
+
+**Severity Score Calculation:**
+- Crash frequency: 40%
+- Affected users: 30%
+- Pattern criticality: 30%
+
+**Developer Assignment Logic:**
+1. Last modifier of crashing line (git blame)
+2. CODEOWNERS file owner
+3. Most frequent contributor (git log)
+4. Module owner (Package.swift)
+5. Excludes devs with no commits in 6 months
+
+## Configuration
+
+Plugin uses `.mcp.json` to configure Firebase MCP server:
+
+```json
+{
+  "mcpServers": {
+    "firebase": {
+      "command": "npx",
+      "args": ["-y", "firebase-tools@latest", "experimental:mcp", "--only", "crashlytics"]
+    }
+  }
+}
+```
+
+## Error Handling
+
+- **Firebase MCP unavailable**: Provides setup instructions
+- **Crashlytics access fails**: Verifies service account permissions
+- **No crashes found**: Reports success with no fatal crashes
+- **Git history unavailable**: Notes inability to assign developer
+- **Code files missing**: Flags deleted/moved files
+- **Rate limiting**: Processes max 10 concurrent analyses
+
+## Output Format
+
+Markdown file `crash-report-[YYYY-MM-DD].md` with:
+- Concise descriptions
+- Detailed code analysis
+- Actionable fix guidance
+- Ready for sprint planning triage

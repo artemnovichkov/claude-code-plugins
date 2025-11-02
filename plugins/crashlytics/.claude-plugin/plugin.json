@@ -1,13 +1,14 @@
 {
-  "name": "crash-report",
+  "name": "crashlytics",
+  "description": "Generate crash reports from Firebase Crashlytics with fix proposals and developer assignments",
   "version": "1.0.0",
-  "description": "Generate crash report from Firebase Crashlytics with fix proposals and developer assignments",
+  "mcpServers": "./.mcp.json",
   "author": {
     "name": "Artem Novichkov",
-    "email": "mail@artemnovichkov.com"
+    "email": "mail@artemnovichkov.com",
+    "url": "https://artemnovichkov.com"
   },
-  "license": "MIT",
   "keywords": ["crashlytics", "crash-report", "firebase", "debugging", "error-tracking"],
-  "commands": ["./commands/"],
-  "mcpServers": "./.mcp.json"
+  "license": "MIT",
+  "commands": ["./commands/"]
 }
