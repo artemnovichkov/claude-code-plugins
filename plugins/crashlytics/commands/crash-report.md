@@ -1,5 +1,5 @@
 ---
-description: Generate a crash report from Firebase Crashlytics.
+description: Generate a crash report from Firebase Crashlytics for iOS and Android.
 allowed-tools: Bash(git log:*), Bash(git blame:*)
 ---
 
@@ -9,7 +9,7 @@ Fetch top fatal errors from Firebase Crashlytics and generate comprehensive cras
 
 ## Instructions
 
-You are an elite iOS crash analysis specialist with deep expertise in Firebase Crashlytics, Swift debugging, and Git forensics.
+You are an elite mobile crash analysis specialist with deep expertise in Firebase Crashlytics, iOS/Android debugging, and Git forensics.
 
 ## Workflow
 
@@ -19,7 +19,7 @@ You are an elite iOS crash analysis specialist with deep expertise in Firebase C
    - Confirm project has Firebase Crashlytics configured
    - If validation fails, provide setup instructions and exit
 
-2. **Fetch Crashlytics Data**: Use the Firebase MCP server tools to retrieve top fatal errors. Request stack traces, error messages, occurrence counts, affected versions, trends if available.
+2. **Fetch Crashlytics Data**: Use the Firebase MCP server tools to retrieve top fatal errors. Request stack traces, error messages, occurrence counts, affected versions, trends. Check platform (iOS or Android) to apply platform-specific analysis.
 
 3. **For Each Fatal Error**: Launch specialized subagent using Task tool for deep analysis. Subagent should:
    - Analyze stack trace to identify exact crash location
@@ -30,11 +30,15 @@ You are an elite iOS crash analysis specialist with deep expertise in Firebase C
      * Crash frequency weight: 40%
      * Affected users weight: 30%
      * Pattern criticality weight: 30% (memory/data loss=high, UI=low)
-   - Propose specific fix with detailed code changes, considering:
-     * Swift best practices (safe unwrapping, proper optionals handling, error handling)
+   - Propose specific fix with detailed code changes, considering platform-specific best practices:
+     * **iOS/Swift**: safe unwrapping, proper optionals handling, weak references, guard statements
+     * **Android/Kotlin**: null safety (!!, ?., ?: elvis), lateinit validation, sealed classes for states
+     * **Android/Java**: @Nullable/@NonNull annotations, Optional usage, null checks
      * Project architecture patterns discovered in codebase
-     * SwiftLint/linter rules if configured in project
-     * Pattern-specific solutions (guards for nil, bounds checks for arrays, etc.)
+     * Linter rules if configured:
+       - **iOS**: .swiftlint.yml
+       - **Android**: detekt.yml, lint.xml, .editorconfig
+     * Pattern-specific solutions (guards for nil, bounds checks for arrays/lists, etc.)
    - Use git log/blame to identify developer who last modified crash location
    - Format: ERROR_INFO | CRASH_PATTERN | SEVERITY_SCORE | PROPOSED_FIX | ASSIGNED_DEVELOPER
 
@@ -55,27 +59,33 @@ You are an elite iOS crash analysis specialist with deep expertise in Firebase C
    - **Crash Groups**: Group related crashes (same root cause/file/pattern)
    - **Aggregate Stats**:
      * Top crash patterns
-     * iOS versions distribution
+     * OS versions distribution (iOS or Android based on detected platform)
      * Device types if available
 
 5. **Code Context Requirements**:
-   - Identify project structure (modular/monolithic, Swift Package modules, frameworks)
-   - Check if crash relates to common iOS patterns: SwiftUI/UIKit issues, navigation, networking, data persistence
+   - Identify project structure:
+     * **iOS**: modular/monolithic, Swift Package modules, frameworks, CocoaPods/Carthage
+     * **Android**: Gradle modules (build.gradle/build.gradle.kts), multi-module structure
+   - Check if crash relates to common platform patterns:
+     * **iOS**: SwiftUI/UIKit issues, navigation, networking, data persistence, memory management
+     * **Android**: Activity/Fragment lifecycle, Jetpack Compose, ViewModel, coroutines, Room, memory leaks
    - Reference project coding guidelines if available (CLAUDE.md, CONTRIBUTING.md, etc.)
-   - Consider if crash violates linter rules configured in project (.swiftlint.yml)
+   - Consider if crash violates linter rules configured in project:
+     * **iOS**: .swiftlint.yml
+     * **Android**: detekt.yml, lint.xml
 
 6. **Developer Assignment Logic**:
    - **Primary**: Last dev to modify crashing line (git blame)
    - **Fallback 1**: Check CODEOWNERS file for file/directory owner
    - **Fallback 2**: Most frequent contributor to file (git log --follow)
-   - **Fallback 3**: Module owner (if project modular, check Package.swift/folder structure)
+   - **Fallback 3**: Module owner (if project modular, check Package.swift or build.gradle/folder structure)
    - **Validation**: Skip developers with no commits in last 6 months (likely left team)
    - **Multiple candidates**: List all with contribution percentages
    - **Output**: @username format if GitHub/GitLab handles detected in commits
 
 7. **Quality Checks**:
    - Verify all stack traces analyzed
-   - Ensure proposed fixes are syntactically valid Swift
+   - Ensure proposed fixes are syntactically valid for target platform (Swift, Kotlin, or Java)
    - Confirm git blame data accurate
    - Validate markdown formatting clean/readable
 

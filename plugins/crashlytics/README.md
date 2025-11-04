@@ -1,6 +1,6 @@
 # Crashlytics Plugin
 
-Generate crash reports from Firebase Crashlytics with automated fix proposals and developer assignments.
+Generate crash reports from Firebase Crashlytics for iOS and Android with automated fix proposals and developer assignments.
 
 ## Features
 
@@ -8,7 +8,7 @@ Generate crash reports from Firebase Crashlytics with automated fix proposals an
 - **Stack Trace Analysis**: Identifies exact crash locations in codebase
 - **Root Cause Detection**: Analyzes code context to determine failure patterns
 - **Severity Scoring**: Calculates 0-100 score based on frequency, users affected, pattern criticality
-- **Fix Proposals**: Generates specific code changes following Swift best practices
+- **Fix Proposals**: Generates specific code changes following platform best practices (Swift, Kotlin, Java)
 - **Developer Assignment**: Uses git blame/log to assign crashes to responsible developers
 - **Crash Grouping**: Groups related issues by pattern/file/root cause
 - **Comprehensive Reports**: Generates markdown reports with stats, trends, priorities
@@ -42,7 +42,7 @@ Analyzes Crashlytics crashes and generates triage report.
 - Proposed fixes with code snippets
 - Developer assignments with git history
 - Crash groups
-- Aggregate stats (patterns, iOS versions, devices)
+- Aggregate stats (patterns, OS versions, devices)
 
 **Severity Score Calculation:**
 - Crash frequency: 40%
@@ -53,7 +53,7 @@ Analyzes Crashlytics crashes and generates triage report.
 1. Last modifier of crashing line (git blame)
 2. CODEOWNERS file owner
 3. Most frequent contributor (git log)
-4. Module owner (Package.swift)
+4. Module owner (Package.swift or build.gradle)
 5. Excludes devs with no commits in 6 months
 
 ## Configuration
