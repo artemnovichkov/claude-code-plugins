@@ -22,6 +22,8 @@ Generate crash reports from Firebase Crashlytics with automated fix proposals an
 ### xcodebuild-notify
 macOS notifications for `xcodebuild` commands, mimicking Xcode's build notifications.
 
+![xcodebuild-notify](plugins/xcodebuild-notify/assets/notification.png)
+
 **Features:**
 - Sends a notification after every `xcodebuild` build
 - Shows `Build Succeeded` or `Build Failed` as title
