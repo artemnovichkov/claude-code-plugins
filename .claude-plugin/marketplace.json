@@ -23,6 +23,18 @@
       },
       "source": "./plugins/crashlytics",
       "category": "development"
+    },
+    {
+      "name": "xcodebuild-notify",
+      "description": "macOS notifications for xcodebuild commands, mimicking Xcode's build notifications",
+      "version": "1.0.0",
+      "author": {
+        "name": "Artem Novichkov",
+        "email": "mail@artemnovichkov.com",
+        "url": "https://artemnovichkov.com"
+      },
+      "source": "./plugins/xcodebuild-notify",
+      "category": "development"
     }
   ]
 }
