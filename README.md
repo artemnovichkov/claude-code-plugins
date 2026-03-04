@@ -19,6 +19,17 @@ Generate crash reports from Firebase Crashlytics with automated fix proposals an
 **Category:** Development
 **Version:** 1.0.0
 
+### xcodebuild-notify
+macOS notifications for `xcodebuild` commands, mimicking Xcode's build notifications.
+
+**Features:**
+- Sends a notification after every `xcodebuild` build
+- Shows `Build Succeeded` or `Build Failed` as title
+- Body format: `<scheme> | <project> Project`
+
+**Category:** Development
+**Version:** 1.0.0
+
 ## Structure
 
 ```
@@ -26,13 +37,21 @@ Generate crash reports from Firebase Crashlytics with automated fix proposals an
 ├── .claude-plugin/
 │   └── marketplace.json       # Marketplace config
 └── plugins/
-    └── crashlytics/          # Crashlytics plugin
+    ├── crashlytics/          # Crashlytics plugin
+    │   ├── .claude-plugin/
+    │   │   └── plugin.json
+    │   ├── .mcp.json
+    │   ├── README.md
+    │   └── commands/
+    │       └── crash-report.md
+    └── xcodebuild-notify/    # xcodebuild-notify plugin
         ├── .claude-plugin/
-        │   └── plugin.json   # Plugin metadata
-        ├── .mcp.json         # MCP server config
-        ├── README.md         # Plugin docs
-        └── commands/
-            └── crash-report.md
+        │   └── plugin.json
+        ├── README.md
+        └── hooks/
+            ├── hooks.json
+            └── scripts/
+                └── xcodebuild-notify.sh
 ```
 
 ## Installation
