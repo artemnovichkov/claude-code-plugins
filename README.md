@@ -1,8 +1,8 @@
-# Claude Code Plugins Marketplace
+# Claude Code Skills
 
-Collection of Claude Code plugins for enhanced development workflows.
+Collection of Claude Code skills for enhanced development workflows.
 
-## Available Plugins
+## Available Skills
 
 ### Crashlytics
 Generate crash reports from Firebase Crashlytics with automated fix proposals and developer assignments.
@@ -22,7 +22,7 @@ Generate crash reports from Firebase Crashlytics with automated fix proposals an
 ### xcodebuild-notify
 macOS notifications for `xcodebuild` commands, mimicking Xcode's build notifications.
 
-![xcodebuild-notify](plugins/xcodebuild-notify/assets/notification.png)
+![xcodebuild-notify](skills/xcodebuild-notify/assets/notification.png)
 
 **Features:**
 - Sends a notification after every `xcodebuild` build
@@ -38,15 +38,15 @@ macOS notifications for `xcodebuild` commands, mimicking Xcode's build notificat
 .
 ├── .claude-plugin/
 │   └── marketplace.json       # Marketplace config
-└── plugins/
-    ├── crashlytics/          # Crashlytics plugin
+└── skills/
+    ├── crashlytics/          # Crashlytics skill
     │   ├── .claude-plugin/
     │   │   └── plugin.json
     │   ├── .mcp.json
     │   ├── README.md
     │   └── commands/
     │       └── crash-report.md
-    └── xcodebuild-notify/    # xcodebuild-notify plugin
+    └── xcodebuild-notify/    # xcodebuild-notify skill
         ├── .claude-plugin/
         │   └── plugin.json
         ├── README.md
@@ -59,7 +59,7 @@ macOS notifications for `xcodebuild` commands, mimicking Xcode's build notificat
 ## Installation
 
 ```bash
-/plugin marketplace add artemnovichkov/claude-code-plugins
+/plugin marketplace add artemnovichkov/skills
 ```
 
 ## Author

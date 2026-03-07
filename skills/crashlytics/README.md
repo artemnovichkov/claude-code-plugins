@@ -1,4 +1,4 @@
-# Crashlytics Plugin
+# Crashlytics Skill
 
 Generate crash reports from Firebase Crashlytics for iOS and Android with automated fix proposals and developer assignments.
 
@@ -58,7 +58,7 @@ Analyzes Crashlytics crashes and generates triage report.
 
 ## Configuration
 
-Plugin uses `.mcp.json` to configure Firebase MCP server:
+Skill uses `.mcp.json` to configure Firebase MCP server:
 
 ```json
 {

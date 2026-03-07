@@ -1,6 +1,6 @@
 # xcodebuild-notify
 
-A Claude Code plugin that sends macOS notifications for `xcodebuild` commands, mimicking Xcode's build notifications.
+A Claude Code skill that sends macOS notifications for `xcodebuild` commands, mimicking Xcode's build notifications.
 
 ![Notification](assets/notification.png)
 

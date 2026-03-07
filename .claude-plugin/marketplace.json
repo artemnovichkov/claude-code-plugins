@@ -1,15 +1,15 @@
 {
-  "name": "claude-code-plugins",
+  "name": "skills",
   "owner": {
     "name": "Artem Novichkov",
     "email": "mail@artemnovichkov.com",
     "url": "https://artemnovichkov.com"
   },
   "metadata": {
-    "description": "A marketplace for Claude Code plugins",
+    "description": "A marketplace for Claude Code skills",
     "version": "1.1.0",
-    "homepage": "https://github.com/artemnovichkov/claude-code-plugins",
-    "pluginRoot": "./plugins"
+    "homepage": "https://github.com/artemnovichkov/skills",
+    "pluginRoot": "./skills"
   },
   "plugins": [
     {
@@ -21,7 +21,7 @@
         "email": "mail@artemnovichkov.com",
         "url": "https://artemnovichkov.com"
       },
-      "source": "./plugins/crashlytics",
+      "source": "./skills/crashlytics",
       "category": "development"
     },
     {
@@ -33,7 +33,7 @@
         "email": "mail@artemnovichkov.com",
         "url": "https://artemnovichkov.com"
       },
-      "source": "./plugins/xcodebuild-notify",
+      "source": "./skills/xcodebuild-notify",
       "category": "development"
     }
   ]
