@@ -2,25 +2,37 @@
 
 Curated collection of skills for AI coding agents. Each skill adds commands, hooks, MCP servers, or agents to enhance development workflows.
 
-Compatible with any agent that supports the plugin/skill format: Claude Code, Codex, and others.
+Compatible with 40+ agents via [skills.sh](https://skills.sh): Claude Code, Codex, Cursor, Copilot, and more.
 
 ## Repo Structure
 
 ```
 skills/<skill-name>/
-  .claude-plugin/plugin.json   # Skill manifest (name, description, version)
+  SKILL.md                     # Skill manifest for skills.sh (name, description, instructions)
+  .claude-plugin/plugin.json   # Claude Code plugin manifest
   README.md                    # Skill docs
   commands/                    # Slash commands (optional)
   hooks/                       # Hook definitions (optional)
   .mcp.json                    # MCP server config (optional)
 ```
 
-Root `.claude-plugin/marketplace.json` registers all skills.
+Root `.claude-plugin/marketplace.json` registers all skills for Claude Code plugin system.
 
 ## Adding a New Skill
 
 1. Create `skills/<skill-name>/` directory
-2. Add `.claude-plugin/plugin.json`:
+2. Add `SKILL.md` with frontmatter:
+   ```markdown
+   ---
+   name: <skill-name>
+   description: Short description of what the skill does and when to use it
+   ---
+
+   # Skill Name
+
+   Instructions for the agent...
+   ```
+3. Add `.claude-plugin/plugin.json` (for Claude Code compatibility):
    ```json
    {
      "name": "<skill-name>",
@@ -28,24 +40,29 @@ Root `.claude-plugin/marketplace.json` registers all skills.
      "version": "1.0.0"
    }
    ```
-3. Add `README.md` with features, requirements, usage
-4. Add components: `commands/`, `hooks/`, `.mcp.json` as needed
-5. Register in `.claude-plugin/marketplace.json` under `plugins` array
-6. Update root `README.md` with skill listing
+4. Add `README.md` with features, requirements, usage
+5. Add components: `commands/`, `hooks/`, `.mcp.json` as needed
+6. Register in `.claude-plugin/marketplace.json` under `plugins` array
+7. Update root `README.md` with skill listing
 
-## Conventions
+## Installation
 
-- `.claude-plugin/` dirs and `plugin.json` files are framework conventions -- do not rename
-- `$CLAUDE_PLUGIN_ROOT` env var in hooks references skill root at runtime (agent-specific, may vary)
-- Keep skills self-contained (no cross-skill dependencies)
-- Skills should document agent compatibility in their README
+### Any Agent (via skills.sh)
 
-## Testing
+```bash
+npx skills add artemnovichkov/skills
+```
 
-Install via your agent's plugin mechanism. For Claude Code:
+### Claude Code
 
 ```bash
 /plugin marketplace add artemnovichkov/skills
 ```
 
-Then use the skill's commands or trigger its hooks.
+## Conventions
+
+- `SKILL.md` is the universal skill manifest (skills.sh ecosystem)
+- `.claude-plugin/` dirs and `plugin.json` are Claude Code conventions -- keep both for compatibility
+- `$CLAUDE_PLUGIN_ROOT` env var in hooks references skill root at runtime (Claude Code specific)
+- Keep skills self-contained (no cross-skill dependencies)
+- Skills should document agent compatibility in their README

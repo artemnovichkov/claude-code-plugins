@@ -40,6 +40,7 @@ macOS notifications for `xcodebuild` commands, mimicking Xcode's build notificat
 │   └── marketplace.json       # Marketplace config
 └── skills/
     ├── crashlytics/          # Crashlytics skill
+    │   ├── SKILL.md          # Skill manifest (skills.sh)
     │   ├── .claude-plugin/
     │   │   └── plugin.json
     │   ├── .mcp.json
@@ -47,6 +48,7 @@ macOS notifications for `xcodebuild` commands, mimicking Xcode's build notificat
     │   └── commands/
     │       └── crash-report.md
     └── xcodebuild-notify/    # xcodebuild-notify skill
+        ├── SKILL.md          # Skill manifest (skills.sh)
         ├── .claude-plugin/
         │   └── plugin.json
         ├── README.md
@@ -58,15 +60,17 @@ macOS notifications for `xcodebuild` commands, mimicking Xcode's build notificat
 
 ## Installation
 
+### Any Agent (via [skills.sh](https://skills.sh))
+
+```bash
+npx skills add artemnovichkov/skills
+```
+
 ### Claude Code
 
 ```bash
 /plugin marketplace add artemnovichkov/skills
 ```
-
-### Other Agents
-
-Clone the repo and point your agent to the desired skill directory. Each skill is self-contained with its own manifest, commands, hooks, and MCP config.
 
 ## Author
 

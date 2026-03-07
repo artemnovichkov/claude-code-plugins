@@ -8,8 +8,9 @@
 ## Required Files
 
 Each skill must have:
-- `.claude-plugin/plugin.json` -- manifest with name, description, version
+- `SKILL.md` -- universal skill manifest with YAML frontmatter (name, description) and agent instructions
 - `README.md` -- docs with features, requirements, usage
+- `.claude-plugin/plugin.json` -- Claude Code plugin manifest (for backward compatibility)
 
 ## Optional Components
 
