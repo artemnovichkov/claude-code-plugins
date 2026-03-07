@@ -17,7 +17,7 @@ Generate crash reports from Firebase Crashlytics for iOS and Android with automa
 
 - Firebase project with Crashlytics enabled
 - Git repository
-- Claude Code
+- AI coding agent with plugin/skill support (Claude Code, Codex, etc.)
 
 ## Commands
 

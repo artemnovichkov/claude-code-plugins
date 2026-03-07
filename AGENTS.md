@@ -1,6 +1,8 @@
 # Skills Marketplace
 
-Curated collection of Claude Code skills. Each skill adds commands, hooks, MCP servers, or agents.
+Curated collection of skills for AI coding agents. Each skill adds commands, hooks, MCP servers, or agents to enhance development workflows.
+
+Compatible with any agent that supports the plugin/skill format: Claude Code, Codex, and others.
 
 ## Repo Structure
 
@@ -34,10 +36,13 @@ Root `.claude-plugin/marketplace.json` registers all skills.
 ## Conventions
 
 - `.claude-plugin/` dirs and `plugin.json` files are framework conventions -- do not rename
-- `$CLAUDE_PLUGIN_ROOT` env var in hooks references skill root at runtime
+- `$CLAUDE_PLUGIN_ROOT` env var in hooks references skill root at runtime (agent-specific, may vary)
 - Keep skills self-contained (no cross-skill dependencies)
+- Skills should document agent compatibility in their README
 
 ## Testing
+
+Install via your agent's plugin mechanism. For Claude Code:
 
 ```bash
 /plugin marketplace add artemnovichkov/skills

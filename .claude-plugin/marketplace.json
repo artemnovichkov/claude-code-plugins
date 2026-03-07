@@ -6,7 +6,7 @@
     "url": "https://artemnovichkov.com"
   },
   "metadata": {
-    "description": "A marketplace for Claude Code skills",
+    "description": "A marketplace of skills for AI coding agents",
     "version": "1.1.0",
     "homepage": "https://github.com/artemnovichkov/skills",
     "pluginRoot": "./skills"

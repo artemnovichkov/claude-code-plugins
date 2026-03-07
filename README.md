@@ -1,6 +1,6 @@
-# Claude Code Skills
+# Skills
 
-Collection of Claude Code skills for enhanced development workflows.
+Collection of skills for AI coding agents — commands, hooks, and integrations that enhance development workflows.
 
 ## Available Skills
 
@@ -58,9 +58,15 @@ macOS notifications for `xcodebuild` commands, mimicking Xcode's build notificat
 
 ## Installation
 
+### Claude Code
+
 ```bash
 /plugin marketplace add artemnovichkov/skills
 ```
+
+### Other Agents
+
+Clone the repo and point your agent to the desired skill directory. Each skill is self-contained with its own manifest, commands, hooks, and MCP config.
 
 ## Author
 

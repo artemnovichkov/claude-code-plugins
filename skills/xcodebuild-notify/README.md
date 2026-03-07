@@ -1,6 +1,6 @@
 # xcodebuild-notify
 
-A Claude Code skill that sends macOS notifications for `xcodebuild` commands, mimicking Xcode's build notifications.
+A skill that sends macOS notifications for `xcodebuild` commands, mimicking Xcode's build notifications. Works with any AI coding agent that supports hooks.
 
 ![Notification](assets/notification.png)
 
@@ -16,29 +16,12 @@ A Claude Code skill that sends macOS notifications for `xcodebuild` commands, mi
 
 ## Installation
 
-Install the plugin:
+### Claude Code
 
 ```bash
-claude plugin install artemnovichkov/claude-code-plugins/xcodebuild-notify
+/plugin marketplace add artemnovichkov/skills
 ```
 
-Then add the hook to `~/.claude/settings.json` (replace `<install-path>` with the actual plugin path, usually `~/.claude/plugins/cache/claude-code-plugins/xcodebuild-notify/1.0.0`):
+### Other Agents
 
-```json
-"hooks": {
-  "PostToolUse": [
-    {
-      "matcher": "Bash",
-      "hooks": [
-        {
-          "type": "command",
-          "command": "bash <install-path>/hooks/scripts/xcodebuild-notify.sh",
-          "async": true
-        }
-      ]
-    }
-  ]
-}
-```
-
-Restart Claude Code for the hook to take effect.
+Configure a `PostToolUse` hook that runs `hooks/scripts/xcodebuild-notify.sh` after Bash tool calls. See `hooks/hooks.json` for the hook definition.
