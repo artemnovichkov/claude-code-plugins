@@ -35,6 +35,18 @@
       },
       "source": "./skills/xcodebuild-notify",
       "category": "development"
+    },
+    {
+      "name": "design-compare",
+      "description": "Compare Figma designs against implementation screenshots with interactive HTML reports",
+      "version": "1.0.0",
+      "author": {
+        "name": "Artem Novichkov",
+        "email": "mail@artemnovichkov.com",
+        "url": "https://artemnovichkov.com"
+      },
+      "source": "./skills/design-compare",
+      "category": "development"
     }
   ]
 }

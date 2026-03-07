@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Compare</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #1a1a1a; color: #fff; display: flex; height: 100vh; overflow: hidden; }
+
+  .sidebar {
+    width: 240px; min-width: 240px; background: #111; border-right: 1px solid #333;
+    display: flex; flex-direction: column; overflow-y: auto;
+  }
+  .sidebar header { padding: 20px 16px 8px; }
+  .sidebar header h1 { font-size: 17px; font-weight: 600; }
+  .sidebar header time { font-size: 11px; color: #666; display: block; margin-top: 2px; }
+  .screen-list { list-style: none; padding: 8px 0; flex: 1; }
+  .screen-list li {
+    padding: 10px 16px; cursor: pointer; font-size: 14px; color: #aaa;
+    border-left: 3px solid transparent; transition: all 0.15s;
+  }
+  .screen-list li:hover { background: #1f1f1f; color: #fff; }
+  .screen-list li.active { background: #1f1f1f; color: #fff; border-left-color: #a259ff; }
+
+  .main { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+
+  .screen-header { text-align: center; padding: 16px 24px 8px; }
+  .screen-header a { color: #a259ff; font-size: 13px; text-decoration: none; }
+  .screen-header a:hover { text-decoration: underline; }
+
+  .controls { display: flex; justify-content: center; gap: 8px; padding: 0 16px 12px; }
+  .controls button {
+    padding: 8px 20px; border: 1px solid #444; background: #2a2a2a;
+    color: #fff; border-radius: 8px; cursor: pointer; font-size: 14px;
+  }
+  .controls button.active { background: #0071e3; border-color: #0071e3; }
+
+  .labels { display: flex; justify-content: center; gap: 24px; padding: 0 16px 12px; font-size: 13px; color: #888; }
+  .labels span::before { content: ''; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: middle; }
+  .labels .lbl-figma::before { background: #a259ff; }
+  .labels .lbl-preview::before { background: #0071e3; }
+
+  :root { --img-width: 400px; }
+
+  .side-by-side { display: none; justify-content: center; align-items: start; gap: 24px; padding: 0 24px 24px; }
+  .side-by-side .panel { text-align: center; width: var(--img-width); flex-shrink: 0; }
+  .side-by-side .panel img { width: 100%; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,.4); }
+  .side-by-side .panel p { margin-top: 8px; font-size: 13px; color: #888; }
+
+  .swipe-container {
+    position: relative; width: var(--img-width); margin: 0 auto 24px;
+    overflow: hidden; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,.4);
+    user-select: none; -webkit-user-select: none;
+  }
+  .swipe-container .img-base { display: block; width: 100%; pointer-events: none; }
+  .swipe-container .img-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: fill; pointer-events: none; clip-path: inset(0 50% 0 0);
+  }
+  .swipe-container .slider-line {
+    position: absolute; top: 0; width: 2px; height: 100%; background: #fff;
+    pointer-events: none; z-index: 2;
+  }
+  .swipe-container .slider-handle {
+    position: absolute; top: 50%; width: 36px; height: 36px; border-radius: 50%;
+    background: #fff; transform: translate(-50%, -50%); z-index: 3;
+    cursor: ew-resize; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,.3);
+  }
+  .swipe-container .slider-handle::before { content: '\25C0\00a0\25B6'; font-size: 10px; color: #333; }
+
+  .swipe-label { position: absolute; bottom: 12px; padding: 4px 12px; border-radius: 6px; background: rgba(0,0,0,.6); font-size: 12px; color: #fff; z-index: 4; pointer-events: none; }
+  .swipe-label.left { left: 12px; }
+  .swipe-label.right { right: 12px; }
+</style>
+</head>
+<body>
+  <nav class="sidebar">
+    <header>
+      <h1>Design Compare</h1>
+      <time id="timestamp"></time>
+    </header>
+    <ul class="screen-list" id="screen-list"></ul>
+  </nav>
+
+  <div class="main">
+  <div class="screen-header" id="screen-header"></div>
+
+  <div class="controls">
+    <button id="btn-side" onclick="setMode('side')">Side by Side</button>
+    <button id="btn-swipe" class="active" onclick="setMode('swipe')">Swipe</button>
+  </div>
+  <div class="labels">
+    <span class="lbl-figma">Figma</span>
+    <span class="lbl-preview">Preview</span>
+  </div>
+
+  <div class="side-by-side" id="side-view">
+    <div class="panel"><img id="side-figma" src="" alt="Figma"><p>Figma</p></div>
+    <div class="panel"><img id="side-preview" src="" alt="Preview"><p>Preview</p></div>
+  </div>
+
+  <div class="swipe-container" id="swipe-view">
+    <img class="img-base" id="swipe-base" src="" alt="Preview">
+    <img class="img-overlay" id="swipe-overlay" src="" alt="Figma">
+    <div class="slider-line" id="slider-line"></div>
+    <div class="slider-handle" id="slider-handle"></div>
+    <div class="swipe-label left">Figma</div>
+    <div class="swipe-label right">Preview</div>
+  </div>
+  </div><!-- .main -->
+
+<script src="config.js"></script>
+<script>
+  // Render timestamp
+  document.getElementById('timestamp').textContent = reportConfig.generatedAt;
+
+  // Render screen list
+  const listEl = document.getElementById('screen-list');
+  let currentScreen = 0;
+
+  reportConfig.screens.forEach((screen, i) => {
+    const li = document.createElement('li');
+    li.textContent = screen.name;
+    li.onclick = () => selectScreen(i);
+    listEl.appendChild(li);
+  });
+
+  function selectScreen(index) {
+    currentScreen = index;
+    const screen = reportConfig.screens[index];
+
+    // Update list
+    listEl.querySelectorAll('li').forEach((li, i) => {
+      li.classList.toggle('active', i === index);
+    });
+
+    // Update Figma link
+    const headerEl = document.getElementById('screen-header');
+    if (screen.figmaUrl) {
+      headerEl.innerHTML = '<a href="' + screen.figmaUrl + '" target="_blank">Open in Figma ↗</a>';
+    } else {
+      headerEl.innerHTML = '';
+    }
+
+    // Update images
+    document.getElementById('side-figma').src = screen.figma;
+    document.getElementById('side-preview').src = screen.preview;
+    document.getElementById('swipe-base').src = screen.preview;
+    document.getElementById('swipe-overlay').src = screen.figma;
+
+    // Re-init slider after image loads
+    document.getElementById('swipe-base').onload = initSlider;
+  }
+
+  let currentMode = 'swipe';
+  function setMode(mode) {
+    currentMode = mode;
+    document.getElementById('swipe-view').style.display = mode === 'swipe' ? 'block' : 'none';
+    document.getElementById('side-view').style.display = mode === 'side' ? 'flex' : 'none';
+    document.getElementById('btn-swipe').classList.toggle('active', mode === 'swipe');
+    document.getElementById('btn-side').classList.toggle('active', mode === 'side');
+    if (mode === 'swipe') initSlider();
+  }
+
+  const container = document.getElementById('swipe-view');
+  const overlayImg = document.getElementById('swipe-overlay');
+  const line = document.getElementById('slider-line');
+  const handle = document.getElementById('slider-handle');
+  let dragging = false;
+
+  function updateSlider(x) {
+    const rect = container.getBoundingClientRect();
+    const pos = Math.max(0, Math.min(x - rect.left, rect.width));
+    const pct = pos / rect.width * 100;
+    const clipRight = (100 - pct).toFixed(2);
+    overlayImg.style.clipPath = 'inset(0 ' + clipRight + '% 0 0)';
+    line.style.left = pct.toFixed(2) + '%';
+    handle.style.left = pct.toFixed(2) + '%';
+  }
+
+  function initSlider() {
+    const rect = container.getBoundingClientRect();
+    if (rect.width > 0) updateSlider(rect.left + rect.width / 2);
+  }
+
+  handle.addEventListener('mousedown', e => { e.preventDefault(); dragging = true; });
+  handle.addEventListener('touchstart', () => dragging = true, { passive: true });
+  window.addEventListener('mouseup', () => dragging = false);
+  window.addEventListener('touchend', () => dragging = false);
+  window.addEventListener('mousemove', e => { if (dragging) updateSlider(e.clientX); });
+  window.addEventListener('touchmove', e => { if (dragging) updateSlider(e.touches[0].clientX); }, { passive: true });
+  container.addEventListener('click', e => updateSlider(e.clientX));
+  window.addEventListener('resize', initSlider);
+
+  selectScreen(0);
+  setMode('side');
+</script>
+</body>
+</html>

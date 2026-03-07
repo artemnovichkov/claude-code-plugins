@@ -32,6 +32,19 @@ macOS notifications for `xcodebuild` commands, mimicking Xcode's build notificat
 **Category:** Development
 **Version:** 1.0.0
 
+### design-compare
+Compare Figma designs against implementation screenshots with interactive HTML comparison reports.
+
+**Features:**
+- Exports Figma nodes at 3x scale via API
+- Analyzes layout, typography, colors, components, sizing
+- Generates structured match/mismatch reports
+- Interactive HTML with swipe slider and side-by-side views
+- Multi-screen support in a single report
+
+**Category:** Development
+**Version:** 1.0.0
+
 ## Structure
 
 ```
@@ -47,15 +60,24 @@ macOS notifications for `xcodebuild` commands, mimicking Xcode's build notificat
     │   ├── README.md
     │   └── commands/
     │       └── crash-report.md
-    └── xcodebuild-notify/    # xcodebuild-notify skill
+    ├── xcodebuild-notify/    # xcodebuild-notify skill
+    │   ├── SKILL.md          # Skill manifest (skills.sh)
+    │   ├── .claude-plugin/
+    │   │   └── plugin.json
+    │   ├── README.md
+    │   └── hooks/
+    │       ├── hooks.json
+    │       └── scripts/
+    │           └── xcodebuild-notify.sh
+    └── design-compare/       # design-compare skill
         ├── SKILL.md          # Skill manifest (skills.sh)
         ├── .claude-plugin/
         │   └── plugin.json
         ├── README.md
-        └── hooks/
-            ├── hooks.json
-            └── scripts/
-                └── xcodebuild-notify.sh
+        ├── assets/
+        │   └── compare.html
+        └── scripts/
+            └── export-figma-node.sh
 ```
 
 ## Installation

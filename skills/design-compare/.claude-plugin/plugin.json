@@ -1,0 +1,5 @@
+{
+  "name": "design-compare",
+  "description": "Compare Figma designs against implementation screenshots with interactive HTML reports",
+  "version": "1.0.0"
+}
