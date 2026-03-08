@@ -16,6 +16,24 @@ FILE_KEY="${1:?Usage: export-figma-node.sh <fileKey> <nodeId> <output_path>}"
 NODE_ID="${2:?Missing nodeId}"
 OUTPUT="${3:?Missing output path}"
 
+# Validate inputs — fileKey: alphanumeric/hyphens, nodeId: digits and colons/hyphens
+if [[ ! "$FILE_KEY" =~ ^[a-zA-Z0-9_-]+$ ]]; then
+  echo "Error: Invalid fileKey — only alphanumeric, hyphens, underscores allowed." >&2
+  exit 1
+fi
+if [[ ! "$NODE_ID" =~ ^[0-9]+([:-][0-9]+)*$ ]]; then
+  echo "Error: Invalid nodeId — expected format like '123:456' or '123-456'." >&2
+  exit 1
+fi
+
+# Sanitize output path — reject path traversal
+case "$OUTPUT" in
+  *..*)
+    echo "Error: Output path must not contain '..'." >&2
+    exit 1
+    ;;
+esac
+
 if [ -z "${FIGMA_ACCESS_TOKEN:-}" ]; then
   echo "Error: FIGMA_ACCESS_TOKEN env var not set." >&2
   echo "Get one from: https://www.figma.com/developers/api#access-tokens" >&2

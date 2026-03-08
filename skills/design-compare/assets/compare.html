@@ -136,12 +136,15 @@
       li.classList.toggle('active', i === index);
     });
 
-    // Update Figma link
+    // Update Figma link (sanitized — allow only https://www.figma.com/ URLs)
     const headerEl = document.getElementById('screen-header');
-    if (screen.figmaUrl) {
-      headerEl.innerHTML = '<a href="' + screen.figmaUrl + '" target="_blank">Open in Figma ↗</a>';
-    } else {
-      headerEl.innerHTML = '';
+    headerEl.textContent = '';
+    if (screen.figmaUrl && /^https:\/\/www\.figma\.com\//.test(screen.figmaUrl)) {
+      const a = document.createElement('a');
+      a.href = screen.figmaUrl;
+      a.target = '_blank';
+      a.textContent = 'Open in Figma ↗';
+      headerEl.appendChild(a);
     }
 
     // Update images
@@ -195,7 +198,7 @@
   window.addEventListener('resize', initSlider);
 
   selectScreen(0);
-  setMode('side');
+  setMode('swipe');
 </script>
 </body>
 </html>
