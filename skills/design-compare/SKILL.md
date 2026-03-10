@@ -61,13 +61,14 @@ Read/view both images (Figma inline screenshot + preview file) and analyze them.
 
 ### Step 3: Output Comparison Summary
 
-Produce a structured summary with two sections:
+Produce a single markdown table ordered by visual importance:
 
-**Positive (matches):** List aspects where the implementation matches the design.
+| Status | Aspect | Detail |
+|--------|--------|--------|
+| ✅ | Layout alignment | Matches design |
+| ❌ | Background color | Expected #1A1A1A, got #FFFFFF |
 
-**Negative (mismatches):** List aspects where the implementation diverges from the design, with specific details about what differs and how to fix it.
-
-Keep each item concise (one line). Order by visual importance.
+Use ✅ for matches, ❌ for mismatches. Keep each row concise (one line). For mismatches, include what differs and how to fix it.
 
 ### Step 4: Generate HTML Comparison Page
 

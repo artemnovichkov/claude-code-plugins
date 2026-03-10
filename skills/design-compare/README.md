@@ -25,6 +25,10 @@ Provide a Figma URL and a preview screenshot, then ask to compare them. The skil
 3. Analyze visual differences
 4. Generate an interactive HTML report with swipe/side-by-side views
 
+## Screenshot
+
+![Design Compare](/.github/screenshot.png)
+
 ## Report Structure
 
 ```
