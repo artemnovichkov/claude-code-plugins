@@ -1,9 +1,5 @@
 # Skills
 
-[![MIT License](https://img.shields.io/github/license/artemnovichkov/skills)](LICENSE)
-[![GitHub Stars](https://img.shields.io/github/stars/artemnovichkov/skills)](https://github.com/artemnovichkov/skills)
-[![Weekly Installs](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fskills.sh%2Fapi%2Fv1%2Fskills%2Fartemnovichkov%2Fskills&query=%24.weeklyInstalls&label=weekly%20installs)](https://skills.sh/artemnovichkov/skills)
-
 A collection of agent skills for iOS and Swift development workflows — crash triage, design comparison, build notifications, and log analysis.
 
 ## Available Skills
@@ -69,17 +65,10 @@ npx skills add artemnovichkov/skills --skill design-compare
 /plugin marketplace add artemnovichkov/skills
 ```
 
-## Contributing
-
-New skills should have:
-- A clear, single purpose
-- Comprehensive documentation
-- Consistent patterns with existing skills
-
 ## Author
 
-Artem Novichkov — [artemnovichkov.com](https://artemnovichkov.com/)
+Artem Novichkov, https://artemnovichkov.com/
 
 ## License
 
-MIT. See [LICENSE](./LICENSE) for details.
+The project is available under the MIT license. See the [LICENSE](./LICENSE) file for more info.
