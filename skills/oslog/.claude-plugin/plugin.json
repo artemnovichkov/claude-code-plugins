@@ -1,0 +1,12 @@
+{
+  "name": "oslog",
+  "description": "Read, stream, and analyze Apple unified logs (OSLog) for iOS/macOS apps",
+  "version": "1.0.0",
+  "author": {
+    "name": "Artem Novichkov",
+    "email": "mail@artemnovichkov.com",
+    "url": "https://artemnovichkov.com"
+  },
+  "keywords": ["oslog", "logging", "debugging", "ios", "macos", "apple"],
+  "license": "MIT"
+}
