@@ -45,40 +45,18 @@ Compare Figma designs against implementation screenshots with interactive HTML c
 **Category:** Development
 **Version:** 1.0.0
 
-## Structure
+### oslog
+Read, stream, and analyze Apple unified logs (OSLog) for iOS/macOS apps.
 
-```
-.
-├── .claude-plugin/
-│   └── marketplace.json       # Marketplace config
-└── skills/
-    ├── crashlytics/          # Crashlytics skill
-    │   ├── SKILL.md          # Skill manifest (skills.sh)
-    │   ├── .claude-plugin/
-    │   │   └── plugin.json
-    │   ├── .mcp.json
-    │   ├── README.md
-    │   └── commands/
-    │       └── crash-report.md
-    ├── xcodebuild-notify/    # xcodebuild-notify skill
-    │   ├── SKILL.md          # Skill manifest (skills.sh)
-    │   ├── .claude-plugin/
-    │   │   └── plugin.json
-    │   ├── README.md
-    │   └── hooks/
-    │       ├── hooks.json
-    │       └── scripts/
-    │           └── xcodebuild-notify.sh
-    └── design-compare/       # design-compare skill
-        ├── SKILL.md          # Skill manifest (skills.sh)
-        ├── .claude-plugin/
-        │   └── plugin.json
-        ├── README.md
-        ├── assets/
-        │   └── compare.html
-        └── scripts/
-            └── export-figma-node.sh
-```
+**Features:**
+- Auto-detects subsystem from `Logger(subsystem:)` in source code
+- Shows recent logs from the live system log store
+- Streams logs in real time from a running app
+- Analyzes `.logarchive` bundles with full predicate filtering
+- Predicate reference with shorthand and NSPredicate syntax
+
+**Category:** Development
+**Version:** 1.0.0
 
 ## Installation
 
