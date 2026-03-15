@@ -9,7 +9,14 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../../../.." && pwd)"
 if [ -f "$REPO_ROOT/.env" ]; then
-  set -a; source "$REPO_ROOT/.env"; set +a
+  while IFS='=' read -r key value; do
+    # Skip comments and blank lines; only export simple KEY=VALUE pairs
+    [[ "$key" =~ ^[[:space:]]*# ]] && continue
+    [[ -z "$key" ]] && continue
+    key=$(echo "$key" | xargs)
+    value=$(echo "$value" | sed 's/^["'"'"']//;s/["'"'"']$//')
+    export "$key=$value"
+  done < "$REPO_ROOT/.env"
 fi
 
 FILE_KEY="${1:?Usage: export-figma-node.sh <fileKey> <nodeId> <output_path>}"
@@ -26,10 +33,14 @@ if [[ ! "$NODE_ID" =~ ^[0-9]+([:-][0-9]+)*$ ]]; then
   exit 1
 fi
 
-# Sanitize output path — reject path traversal
+# Sanitize output path — reject path traversal and absolute paths
 case "$OUTPUT" in
   *..*)
     echo "Error: Output path must not contain '..'." >&2
+    exit 1
+    ;;
+  /*)
+    echo "Error: Output path must be relative, not absolute." >&2
     exit 1
     ;;
 esac
@@ -51,8 +62,7 @@ RESPONSE=$(curl -sf \
 IMAGE_URL=$(echo "$RESPONSE" | python3 -c "import sys,json; d=json.load(sys.stdin); print(list(d['images'].values())[0])")
 
 if [ -z "$IMAGE_URL" ] || [ "$IMAGE_URL" = "null" ]; then
-  echo "Error: Failed to get image URL from Figma API." >&2
-  echo "Response: $RESPONSE" >&2
+  echo "Error: Failed to get image URL from Figma API. Check fileKey/nodeId and token." >&2
   exit 1
 fi
 
