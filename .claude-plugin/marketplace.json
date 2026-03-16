@@ -47,6 +47,18 @@
       },
       "source": "./skills/design-compare",
       "category": "development"
+    },
+    {
+      "name": "oslog",
+      "description": "Read, stream, and analyze Apple unified logs (OSLog) for iOS/macOS apps",
+      "version": "1.0.0",
+      "author": {
+        "name": "Artem Novichkov",
+        "email": "mail@artemnovichkov.com",
+        "url": "https://artemnovichkov.com"
+      },
+      "source": "./skills/oslog",
+      "category": "development"
     }
   ]
 }
