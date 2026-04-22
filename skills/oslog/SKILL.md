@@ -1,6 +1,6 @@
 ---
 name: oslog
-description: Read, stream, and analyze Apple unified logs (OSLog) for iOS/macOS apps. Auto-detects subsystem from Logger usage or bundle identifier. Supports live log show, real-time streaming, and .logarchive analysis with full predicate reference.
+description: "Read, stream, and analyze Apple unified logs (OSLog) for iOS/macOS apps. Auto-detects subsystem from Logger usage or bundle identifier. Supports live log show, real-time streaming, and .logarchive analysis with full predicate reference. Use when the user asks to check app logs, stream console output, debug with OSLog, or analyze .logarchive files on iOS/macOS."
 ---
 
 # oslog
@@ -24,8 +24,6 @@ Auto-detect the OSLog subsystem from the project. Try these sources in order:
 2. **`project.pbxproj`** — fall back to `PRODUCT_BUNDLE_IDENTIFIER` build setting (common convention is to use bundle ID as subsystem)
 3. **`Info.plist`** — read `CFBundleIdentifier` value (resolve `$(PRODUCT_BUNDLE_IDENTIFIER)` if needed)
 4. **Ask the user** — if all detection fails, ask for the subsystem string
-
-Note: the subsystem is an arbitrary string passed to `Logger(subsystem:, category:)`. It often matches the bundle identifier but doesn't have to.
 
 Store the detected subsystem for reuse within the session.
 
@@ -95,68 +93,14 @@ sudo /usr/bin/log collect --last 30m --output <path>.logarchive
 
 ## Predicate Reference
 
-### Shorthand Syntax (Preferred)
+See `PREDICATES.md` for the full predicate field table, comparison operators, and NSPredicate syntax. Key shorthand examples:
 
 ```bash
-# Process
-'p=MyApp'
-'p=foo|bar'                     # OR multiple processes
-
-# Subsystem / category
-'s=com.example.app'
-'c=networking'
-
-# Message content
-'"error loading"'               # message contains
-'m:"timeout"'                   # explicit message contains
-'m~/"regex pattern"'            # regex matching
-
-# Log levels
-'type=error'
-'type>=error'                   # error + fault
-
-# Combined
-'p=MyApp AND type>=error'
-'s=com.example.app AND c=networking AND "timeout"'
+'s=com.example.app'                                # filter by subsystem
+'s=com.example.app AND c=networking'               # subsystem + category
+'s=com.example.app AND type>=error'                # errors and faults only
+'s=com.example.app AND m:"timeout"'                # message contains keyword
 ```
-
-### NSPredicate Syntax (Complex Queries)
-
-```bash
-'process == "MyApp"'
-'composedMessage CONTAINS "error"'
-'subsystem == "com.example.app" AND category == "networking"'
-'logType == "fault" OR logType == "error"'
-'composedMessage MATCHES ".*timeout.*"'
-'processImagePath ENDSWITH "MyApp"'
-```
-
-### Predicate Fields
-
-| Field | Shorthand | Type | Description |
-|-------|-----------|------|-------------|
-| `process` | `p` | string | Process name |
-| `processIdentifier` | `pid` | integer | Process ID |
-| `subsystem` | `s` | string | Subsystem identifier |
-| `category` | `c`, `cat` | string | Subsystem category |
-| `composedMessage` | `m` | string | Log message text |
-| `sender` | `l`, `lib` | string | Library/sender name |
-| `logType` | `type` | log type | default, info, debug, error, fault |
-| `senderImagePath` | — | string | Full sender library path |
-| `processImagePath` | — | string | Full process binary path |
-| `threadIdentifier` | `tid` | integer | Thread ID |
-
-### Comparison Operators
-
-| Operator | Shorthand | Purpose |
-|----------|-----------|---------|
-| `==` | `=` | Equality |
-| `!=` | `<>` | Inequality |
-| `CONTAINS` | `:` | Substring match |
-| `BEGINSWITH` | `:^` | Prefix match |
-| `ENDSWITH` | — | Suffix match |
-| `LIKE` | — | Wildcard (`?`=1, `*`=0+) |
-| `MATCHES` | `~/` | Regex match |
 
 ## Common Workflows
 
