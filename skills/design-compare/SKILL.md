@@ -1,6 +1,6 @@
 ---
 name: design-compare
-description: This skill should be used when the user asks to "compare design with preview", "compare Figma with screenshot", "check design implementation", "compare design to implementation", "design review", or provides a Figma URL alongside a screenshot file for visual comparison.
+description: "Compare Figma designs against implementation screenshots, identifying layout, typography, color, and sizing discrepancies. Generates a structured visual review table and an interactive HTML comparison page with swipe and side-by-side modes. Use when the user asks to compare design with preview, compare Figma with screenshot, check design implementation, or provides a Figma URL alongside a screenshot."
 ---
 
 # Design Compare
@@ -100,19 +100,4 @@ All shared artifacts (`config.js`, `report.html`) are stored in `design-compare-
 
 3. Open the file with `open design-compare-reports/<ReportName>/report.html`.
 
-The report folder structure:
-```
-design-compare-reports/<ReportName>/
-  config.js          — screen list, timestamp, and Figma links
-  report.html        — interactive comparison page
-  <ViewName>/        — per source file (e.g. ContentView/, SliderView/)
-    <slug>_figma.png
-    <slug>_preview.png
-```
-
-The HTML page provides:
-- **Screen tabs** — switch between screens (hidden for single screen)
-- **Figma link** — opens the source node in Figma
-- **Timestamp** — when the report was generated
-- **Swipe** (default) — drag a slider to reveal one image over the other
-- **Side by Side** — both images displayed next to each other with labels
+The HTML page provides swipe (default) and side-by-side comparison modes, screen tabs for multi-screen reports, and direct Figma links.
