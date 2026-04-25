@@ -1,6 +1,6 @@
 ---
 name: xcodebuild-notify
-description: "Sends macOS notifications after xcodebuild commands, showing Build Succeeded or Build Failed with scheme and project info. Mimics Xcode's native build notifications. Auto-triggers on xcodebuild via PostToolUse hook."
+description: Sends macOS notifications after xcodebuild commands, showing Build Succeeded or Build Failed with scheme and project info. Mimics Xcode's native build notifications. Auto-triggers on xcodebuild via PostToolUse hook.
 ---
 
 # xcodebuild-notify

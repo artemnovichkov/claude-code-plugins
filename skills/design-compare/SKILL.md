@@ -1,6 +1,6 @@
 ---
 name: design-compare
-description: "Compare Figma designs against implementation screenshots, identifying layout, typography, color, and sizing discrepancies. Generates a structured visual review table and an interactive HTML comparison page with swipe and side-by-side modes. Use when the user asks to compare design with preview, compare Figma with screenshot, check design implementation, or provides a Figma URL alongside a screenshot."
+description: Compare Figma designs against implementation screenshots, identifying layout, typography, color, and sizing discrepancies. Generates a structured visual review table and an interactive HTML comparison page with swipe and side-by-side modes. Use when the user asks to compare design with preview, compare Figma with screenshot, check design implementation, or provides a Figma URL alongside a screenshot.
 ---
 
 # Design Compare

@@ -1,6 +1,6 @@
 ---
 name: crashlytics
-description: "Generate crash reports from Firebase Crashlytics with automated fix proposals, severity scoring, and developer assignments via git blame. Use when analyzing crashes, triaging production issues, or generating crash triage reports."
+description: Generate crash reports from Firebase Crashlytics with automated fix proposals, severity scoring, and developer assignments via git blame. Use when analyzing crashes, triaging production issues, or generating crash triage reports.
 ---
 
 # Crashlytics

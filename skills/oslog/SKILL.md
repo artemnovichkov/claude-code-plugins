@@ -1,6 +1,6 @@
 ---
 name: oslog
-description: "Read, stream, and analyze Apple unified logs (OSLog) for iOS/macOS apps. Auto-detects subsystem from Logger usage or bundle identifier. Supports live log show, real-time streaming, and .logarchive analysis with full predicate reference. Use when the user asks to check app logs, stream console output, debug with OSLog, or analyze .logarchive files on iOS/macOS."
+description: Read, stream, and analyze Apple unified logs (OSLog) for iOS/macOS apps. Auto-detects subsystem from Logger usage or bundle identifier. Supports live log show, real-time streaming, and .logarchive analysis with full predicate reference. Use when the user asks to check app logs, stream console output, debug with OSLog, or analyze .logarchive files on iOS/macOS.
 ---
 
 # oslog
